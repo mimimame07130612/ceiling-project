@@ -4,7 +4,7 @@ if not os.path.isdir(R): subprocess.run(['git','clone','--depth','1','-q',U,R],c
 def t1():
     c=sorted(glob.glob('/home/claude/*T001*.py'))
     return c[-1] if c else None
-folder=sys.argv[1]; part=sys.argv[2]; num=sys.argv[3] if len(sys.argv)>3 else ''
+folder=sys.argv[1]; part=sys.argv[2]; num=sys.argv[3] if len(sys.argv)>3 else ''; ex=sys.argv[4] if len(sys.argv)>4 else ''
 d=os.path.join(R,folder)
 c=sorted([f for f in os.listdir(d) if part in f])
 if not c:
@@ -24,7 +24,7 @@ if p:
     r=subprocess.run(['python3',p,'report'],capture_output=True,text=True).stdout.split()
     if len(r)>1: sei=int(r[1])
 out=[f,str(b),str(sei)]
-if b<=sei: out.append(s)
+if ex or b<=sei: out.append(s)
 else: out.append('OVER_SEIZONRYO')
 o='\n'.join(out)
 print(o)
