@@ -7,7 +7,7 @@ ex = sys.argv[4] if len(sys.argv) > 4 else ''
 
 roots = sorted(glob.glob('/tmp/ceiling-project-*'))
 if not roots:
-    print('NO_ARCHIVE 5-10 not executed')
+    print('NO_ARCHIVE S1 not executed')
     raise SystemExit(1)
 root = roots[0]
 
