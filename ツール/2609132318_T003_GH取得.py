@@ -67,7 +67,7 @@ else:
 
 nb = len(body.encode())
 print(nb)
-t1 = sorted(glob.glob('/home/claude/*T001*.py'))[-1]
+t1 = sorted(glob.glob('/home/claude/*T007*.py'))[-1]
 alive = int(subprocess.run(['python3', t1, 'report'],
                            capture_output=True, text=True).stdout.split()[1])
 print(alive)
