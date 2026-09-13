@@ -11,8 +11,8 @@ for f in os.listdir(d):
 saved=[]
 for k in sorted(best):
     shutil.copy(os.path.join(d,best[k][1]),os.path.join(DST,best[k][1])); saved.append(best[k][1])
-t1=[f for f in saved if "T001" in f][0]
-turn=subprocess.run([sys.executable,os.path.join(DST,t1),"open"],capture_output=True,text=True).stdout.strip()
+t7=[f for f in saved if "T007" in f][0]
+turn=subprocess.run([sys.executable,os.path.join(DST,t7),"open"],capture_output=True,text=True).stdout.strip()
 ts=subprocess.run(["bash","-c","TZ=Asia/Tokyo date +%y%m%d%H%M"],capture_output=True,text=True).stdout.strip()
 print(turn,ts)
 for s in saved: print(s)
