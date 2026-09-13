@@ -16,3 +16,12 @@ turn=subprocess.run([sys.executable,os.path.join(DST,t7),"open"],capture_output=
 ts=subprocess.run(["bash","-c","TZ=Asia/Tokyo date +%y%m%d%H%M"],capture_output=True,text=True).stdout.strip()
 print(turn,ts)
 for s in saved: print(s)
+kb="/mnt/project"
+tot=0;cnt=0
+if os.path.isdir(kb):
+    for f in sorted(os.listdir(kb)):
+        p=os.path.join(kb,f)
+        if os.path.isfile(p):
+            subprocess.run([sys.executable,os.path.join(DST,t7),"log","ナレッジベース",p])
+            tot+=os.path.getsize(p);cnt+=1
+print("KB",cnt,tot)
