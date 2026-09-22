@@ -1,12 +1,11 @@
 GHファイルリスト
 
-更新日時：2026年9月22日 06:48
+更新日時：2026年9月22日 09:06
 
 GH/.gitignore	10 bytes
 GH/ツール/tl-install.sh	8504 bytes
 GH/まとめ/2609220150_まとめ履歴.csv	1896 bytes
 GH/まとめ/まとめ/2609220150_まとめファイル.md	14644 bytes
-GH/まとめ/引き継ぎ/2609220150_引き継ぎファイル.md	2572 bytes
 GH/まとめ/引き継ぎ/2609220646_引き継ぎファイル.md	2642 bytes
 GH/ルール/2609201200_最初に読むこと.txt	4018 bytes
 GH/ルール/2609220032_セッション開始ルール.txt	2517 bytes
@@ -17,6 +16,14 @@ GH/ルール/2609220032_文書体系.csv	2535 bytes
 GH/検討資料/2609220032_計画書.md	5839 bytes
 GH/検討資料/2609220032_未決事項ファイル.csv	2023 bytes
 GH/検討資料/2609220150_確定事項ファイル.csv	4978 bytes
+GH/参考資料/スクリーン/OS_EP-100HM-MRW1-WF204/取説/479_EP_manu.pdf	1237926 bytes
+GH/参考資料/スクリーン/OS_EP-100HM-MRW1-WF204/図面/479_EP-100HM-MRW1-WF204_draw.pdf	113079 bytes
+GH/参考資料/スピーカー/DALI_SONIKCINEMA/写真/418CZL5kC7L._AC_SL1000_.jpg	25682 bytes
+GH/参考資料/スピーカー/DALI_SONIKCINEMA/写真/41nXXwb0vPL._AC_SL1000_.jpg	23041 bytes
+GH/参考資料/スピーカー/DALI_SONIKCINEMA/写真/51IsSAEoxdL._AC_SL1000_.jpg	34373 bytes
+GH/参考資料/スピーカー/DALI_SONIKCINEMA/写真/61TUmA3W8QL._AC_SL1000_.jpg	65074 bytes
+GH/参考資料/スピーカー/DALI_SONIKCINEMA/取説/DALI_SONIK_Manual_EN.pdf	5345275 bytes
+GH/参考資料/プロジェクター/XGIMI_Horizon20Pro/写真/IMG_8317.JPG	1595110 bytes
 GH/与件/機器一覧.csv	496 bytes
 GH/与件/図1_掘り込み天井_化粧梁露出.jpg	502682 bytes
 GH/与件/必要要件.txt	1111 bytes
