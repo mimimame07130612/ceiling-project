@@ -8,6 +8,7 @@
 #   --zuban: 保管する図のみ指定（O7-3(1)）。省略時は「図番なし（チャット表示）」
 #   作成日時は本コマンド内で TZ=Asia/Tokyo date により1回だけ取得する（F4）。
 #   -o に {ts} を書くとプレフィクス YYMMDDhhmm に置き換わり、図中の作成日時と一致する。
+#   凡例の出典行は図幅で折り返す。
 # 部品JSONの形式:
 #   {"legend":[{"text":..,"color":..,"dash":bool}], "src":[出典..],
 #    "items":[{"t":"line"|"poly"|"rect"|"pt"|"circle"|"text", "p":座標(cm), "cls":"kakutei"|"kari",
@@ -128,7 +129,17 @@ for i, (c, d, t) in enumerate(lg):
         L, f(yy - 4), L + 28, f(yy - 4), c, ' stroke-dasharray="%s"' % DASH if d else ''))
     leg.append('<text x="%d" y="%s" fill="#000">%s</text>' % (L + 36, f(yy), e(t)))
 yy = ly + LH * (len(lg) + 1)
-leg.append('<text x="%d" y="%s" fill="#000">出典：%s</text>' % (L, f(yy), e('、'.join(src) if src else 'なし')))
+# 出典は図幅で折り返す（全角=FS、半角=0.6*FS で幅を見積もる）
+def tw(t): return sum(FS if ord(ch) > 0x2E7F else FS * 0.6 for ch in t)
+toks = [s_ + ('、' if i < len(src) - 1 else '') for i, s_ in enumerate(src)] if src else ['なし']
+rows = ['出典：']
+for t_ in toks:
+    if tw(rows[-1] + t_) > (W - 10 - L) and rows[-1].strip('出典：'):
+        rows.append('　　　')
+    rows[-1] += t_
+for i, r_ in enumerate(rows):
+    leg.append('<text x="%d" y="%s" fill="#000">%s</text>' % (L, f(yy + LH * i), e(r_)))
+yy += LH * (len(rows) - 1)
 Htot = int(yy + 20)
 
 svg = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" width="%d" height="%d" font-family="Hiragino Sans, Yu Gothic, Meiryo, Noto Sans CJK JP, Noto Serif CJK JP, sans-serif" font-size="%d">' % (W, Htot, W, Htot, FS),
