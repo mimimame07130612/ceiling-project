@@ -1,9 +1,10 @@
 GHファイルリスト
 
-更新日時：2026年9月27日 18:31
+更新日時：2026年9月27日 22:45
 
 GH/.gitignore	10 bytes
 GH/ツール/sanmen.py	18206 bytes
+GH/まとめ/2609272219_まとめ_セッション02.md	25104 bytes
 GH/まとめ/2609271736_まとめ_セッション01.md	19597 bytes
 GH/参考資料/スクリーン/OS_EP-100HM-MRW1-WF204/取説/479_EP_manu.pdf	1237926 bytes
 GH/参考資料/スクリーン/OS_EP-100HM-MRW1-WF204/図面/479_EP-100HM-MRW1-WF204_draw.pdf	113079 bytes
@@ -13,5 +14,8 @@ GH/参考資料/スピーカー/DALI_SONIKCINEMA/写真/51IsSAEoxdL._AC_SL1000_.
 GH/参考資料/スピーカー/DALI_SONIKCINEMA/写真/61TUmA3W8QL._AC_SL1000_.jpg	65074 bytes
 GH/参考資料/スピーカー/DALI_SONIKCINEMA/取説/DALI_SONIK_Manual_EN.pdf	5345275 bytes
 GH/参考資料/プロジェクター/XGIMI_Horizon20Pro/写真/IMG_8317.JPG	1595110 bytes
-GH/成果物/2609271602_K002_検討計画書.txt	10375 bytes
-GH/成果物/2609271528_K001_部屋三面図.svg	22824 bytes
+GH/成果物/2609272212_K014_斜め移動経路.svg	33818 bytes
+GH/成果物/2609272212_K014_斜め移動経路.json	15427 bytes
+GH/成果物/2609272211_K013_斜め移動干渉判定表.py	3225 bytes
+GH/成果物/2609272211_K013_斜め移動干渉判定表.csv	753 bytes
+GH/成果物/2609272156_K012_STEP1成立範囲.svg	33411 bytes
