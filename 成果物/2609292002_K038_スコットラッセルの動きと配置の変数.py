@@ -5,7 +5,7 @@
 # 例の条件（検討用の仮の値で、決定ではない）：取付点C＝CSP側面の断面の中心、固定の回転中心O h=268、a=OA=AB=AC=45
 # 使い方：python3 本ファイル（同じフォルダに YYMMDDhhmm_csp.py・YYMMDDhhmm_sanmen.py の最新版を置く）
 import json, math, subprocess, glob, sys
-TS = subprocess.run(['date', '+%y%m%d%H%M'], capture_output=True, text=True, env={'TZ': 'Asia/Tokyo'}).stdout.strip()  # 作図時 2609291726
+TS = subprocess.run(['date', '+%y%m%d%H%M'], capture_output=True, text=True, env={'TZ': 'Asia/Tokyo'}).stdout.strip()  # 作図時 2609292002
 NAME = 'K038_スコットラッセルの動きと配置の変数'
 CSP = sorted(glob.glob('*_csp.py'))[-1]; SAN = sorted(glob.glob('*_sanmen.py'))[-1]
 OUTJ = '/mnt/user-data/outputs/%s_%s.json' % (TS, NAME); OUTS = '/mnt/user-data/outputs/%s_%s.svg' % (TS, NAME)
@@ -50,24 +50,38 @@ for dL in LD:
             w = math.sqrt(r * r - dx * dx); pts_r.append([round(dL + w, 2), h]); pts_l.append([round(dL - w, 2), h])
     items.append(dict(t='poly', view='side', p=pts_l + pts_r[::-1], color='#BA7517', fill='#BA7517', op=0.18, w=1.0))
 h_top = 270 - (dx - R0) / TN
+# ---- 正面図の配光118°（照明のx位置 129.65・220.65、h=270→240。K005と同じ描き方） ----
+FB, FT = 240.0, 270.0
+for xL in (LX, 220.65):
+    wt = R0; wb = R0 + (FT - FB) * TN
+    items.append(dict(t='poly', view='front',
+                      p=[[round(xL - wt, 2), FT], [round(xL + wt, 2), FT],
+                         [round(xL + wb, 2), FB], [round(xL - wb, 2), FB]],
+                      color='#BA7517', fill='#BA7517', op=0.15, w=1.0))
 # ---- 経路・スライダ・リンク ----
 ext = [r2((O[0] - uc[0] * 3, O[1] - uc[1] * 3)), r2((cu[0] + uc[0] * 8, cu[1] + uc[1] * 8))]
 items.append(dict(t='line', view='side', p=ext, color='#555555', w=1.0, dash=True))
 items.append(dict(t='line', view='side', p=[r2(O), r2(P1[2])], color='#6A5FD0', w=2.4, dash=True))   # スライダの通り道 O〜B（収納）
-for (phi, Ap, Bp, Cp), col in ((P1, '#2C6FB0'), (P2, '#C0392B')):
-    items.append(dict(t='line', view='side', p=[r2(O), r2(Ap)], color=col, w=2.2, dash=True))
-    items.append(dict(t='line', view='side', p=[r2(Bp), r2(Cp)], color=col, w=2.2, dash=True))
-    for q in (Ap, Bp, Cp): items.append(dict(t='pt', view='side', p=r2(q), color=col, r=3))
+LB = {  # ラベル位置（収納：A,B,C／使用：A,B,C）
+    ('収', 'A'): (0, -8, 'middle'), ('収', 'B'): (6, 16, 'start'), ('収', 'C'): (-6, -6, 'end'),
+    ('使', 'A'): (-8, 0, 'end'),    ('使', 'B'): (7, 16, 'start'), ('使', 'C'): (8, 14, 'start')}
+for (phi, Ap, Bp, Cp), col, tag in ((P1, '#2C6FB0', '収'), (P2, '#C0392B', '使')):
+    items.append(dict(t='line', view='side', p=[r2(O), r2(Ap)], color=col, w=2.2, dash=True))   # リンクOA
+    items.append(dict(t='line', view='side', p=[r2(Bp), r2(Cp)], color=col, w=2.2, dash=True))  # ロッドBC（A中点）
+    for q, nm in ((Ap, 'A'), (Bp, 'B'), (Cp, 'C')):
+        items.append(dict(t='pt', view='side', p=r2(q), color=col, r=3.2))
+        dx, dy, an = LB[(tag, nm)]
+        items.append(dict(t='text', view='side', p=r2(q), s='%s(%s)' % (nm, tag), dx=dx, dy=dy, anchor=an, color=col))
 items.append(dict(t='pt', view='side', p=r2(O), color='#111111', r=4.5, ring=True))
-items += [dict(t='text', view='side', p=r2(O), s='(O h=268)', dx=8, dy=-8, color='#111111'),
-          dict(t='text', view='side', p=r2(P1[1]), s='(B 収納 d=%.1f h=%.1f)' % P1[2], dx=0, dy=40, color='#6A5FD0'),
-          dict(t='text', view='side', p=r2(P2[3]), s='(C 使用)', dx=8, dy=4, color='#C0392B')]
+items.append(dict(t='text', view='side', p=r2(O), s='O(固定 h=268)', dx=8, dy=-8, color='#111111'))
 notes = [
  'STEP4 4-1：スコットラッセル機構（OA=AB=AC=a、Bが直線上をすべるとCはBの直線に直角な直線上を動く）をSTEP2の配置にあてはめた例。例の値は決定ではない。',
  '必要な経路：水平から%.2f°（SC側へ前15.5・下75.26、距離%.2f。A03-006）→ Bのすべる直線は経路に直角で、LP側へ%.2f°下がる。' % (ang_path, L, ang_rail),
  '例（取付点C＝CSP側面の断面の中心、O h=268、a=45）：OC 収納%.2f→使用%.2f、φ %.1f°→%.1f°。Bの収納位置 d=%.1f h=%.1f（Oからの距離%.1f）。この条件で a≧%.2f。' % (
      t0, t0 + L, math.degrees(P1[0]), math.degrees(P2[0]), P1[2][0], P1[2][1], 2 * a * math.cos(P1[0]), amin),
- '黄：左リンクの内側の面（x=110.9、wR=0）での配光118°の断面。この面では h≦%.1f で配光に入る（照明3灯 d=130・175・220）。収納時は機器が入らないこと（A00-006）。' % h_top,
+ '黄（側面図）：左リンク内側の面 x=110.9 での配光118°の断面。この面では h≦%.1f で配光に入る（照明3灯 d=130・175・220）。黄（正面図）：配光118°をx方向に広げた線（照明x=129.65・220.65、K005と同じ）。' % h_top,
+ '配光の見方：正面図＝配光がx方向に広がる範囲、側面図＝配光がd方向に広がる範囲。両方に重なって初めて実際に配光の中に入る。収納時は機器・CSPが配光に入らないこと（A00-006、交渉可）。',
+ '例のB（収納 x=110.9・d=151.5・h=250）は、正面図でも側面図でも黄に重なる＝配光の中。実際にO・照明x=129.65/d=175からの距離で確かめても、h=250での円錐半径39.0に対し距離30.1で中に入る。',
  'Cの点は一直線に動くが、ロッドBCはφの分だけ回る（例では約%.0f°）。CSPの姿勢をどう保つかは別に決める必要がある。' % (math.degrees(P2[0] - P1[0])),
 ]
 ov = dict(title_note=notes, legend=C['legend'] + [
